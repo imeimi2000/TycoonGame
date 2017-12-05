@@ -13,6 +13,10 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	public void setX(int x) { location.setX(x); }
 	public void setY(int y) { location.setY(y); }
+	public void move(Point p) {
+		location.setX(p.getX());
+		location.setY(p.getY());
+	}
 	public Point getLocation() { return location; }
 	public abstract void draw(Graphics g);
 	
@@ -21,6 +25,5 @@ public abstract class GameObject implements Comparable<GameObject> {
 		if (index < g.index) return -1;
 		if (index > g.index) return 1;
 		return 0;
-		
 	}
 }

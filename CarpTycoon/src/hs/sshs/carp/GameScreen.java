@@ -2,6 +2,7 @@ package hs.sshs.carp;
 
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -35,6 +36,7 @@ public class GameScreen extends Frame implements MouseListener {
 	public static Frame getScreen() { return mainFrame; }
 	public int getWidth() { return screenSize.getX(); }
 	public int getHeight() { return screenSize.getY(); }
+	public MouseInfo getMouseInfo() { return mouseInfo; }
 	public void addObject(GameObject g) {
 		obj.add(g);
 	}
@@ -49,25 +51,35 @@ public class GameScreen extends Frame implements MouseListener {
 	
 	@Override
 	public void paint(Graphics g) {
-		for (GameObject i : obj) i.draw(g);
+		Image img = createImage(screenSize.getX(), screenSize.getY());
+		Graphics buf = img.getGraphics();
+		
+		for (GameObject i : obj) i.draw(buf);
+		g.drawImage(img, 0, 0, this);
+		mouseInfo.init();
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent event) {
-		// TODO Auto-generated method stub
+	public void update(Graphics g) {
+		paint(g);
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent event) {}
+
+	@Override
+	public void mouseEntered(MouseEvent event) {}
+
+	@Override
+	public void mouseExited(MouseEvent event) {}
+
+	@Override
+	public void mousePressed(MouseEvent event) {}
+
+	@Override
+	public void mouseReleased(MouseEvent event) {
+		System.out.println("Mouse Clicked (" + event.getX() +  "," + event.getY() + ")");
 		mouseInfo.clickLocation(event.getX(), event.getY());
 	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {}
 
 }

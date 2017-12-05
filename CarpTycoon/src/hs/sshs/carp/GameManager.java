@@ -12,18 +12,29 @@ public class GameManager {
 	
 	public int getFrameRate() { return frameRate; }
 	
+	int idx;
+	Carp c;
 	public void update() {
-		
-		
+		if (idx == 0) {
+			idx = 1;
+			c = new Carp(540, 360);
+			scr.addObject(c);
+		}
+		if (scr.getMouseInfo().mouseClicked()) {
+			c.move(scr.getMouseInfo().clickLocation());
+		}
 		scr.repaint();
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		GameManager gm = new GameManager("Carp Tycoon", 640, 360, 60);
 		try {
-			gm.update();
-			Thread.sleep(1000L / gm.getFrameRate());
+			ImageManager.putImage("carp", "res/carp.png");
+			
+			GameManager gm = new GameManager("Carp Tycoon", 1080, 720, 60);
+			while (true) {
+				gm.update();
+				Thread.sleep(1000L / gm.getFrameRate());
+			}
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
