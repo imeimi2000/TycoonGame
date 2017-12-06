@@ -7,13 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameScreen extends Frame implements MouseListener {
 	private MouseInfo mouseInfo;
 	private Point screenSize;
-	private Set<GameObject> obj;
+	private ArrayList<GameObject> obj;
 	private static Frame mainFrame;
 	
 	GameScreen(String title, int width, int height) {
@@ -22,12 +22,12 @@ public class GameScreen extends Frame implements MouseListener {
 		screenSize = new Point(width, height);
 		this.setSize(width, height);
 		this.setVisible(true);
-		obj = new TreeSet<GameObject>();
+		obj = new ArrayList<GameObject>();
 		mainFrame = this;
 		this.addMouseListener(this);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				dispose();
+				//dispose();
 				System.exit(0);
 			}
 		});
@@ -54,6 +54,7 @@ public class GameScreen extends Frame implements MouseListener {
 		Image img = createImage(screenSize.getX(), screenSize.getY());
 		Graphics buf = img.getGraphics();
 		
+		Collections.sort(obj);
 		for (GameObject i : obj) i.draw(buf);
 		g.drawImage(img, 0, 0, this);
 		mouseInfo.init();
@@ -81,5 +82,4 @@ public class GameScreen extends Frame implements MouseListener {
 		System.out.println("Mouse Clicked (" + event.getX() +  "," + event.getY() + ")");
 		mouseInfo.clickLocation(event.getX(), event.getY());
 	}
-
 }
