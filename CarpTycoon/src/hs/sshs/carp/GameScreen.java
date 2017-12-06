@@ -27,7 +27,6 @@ public class GameScreen extends Frame implements MouseListener {
 		this.addMouseListener(this);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				//dispose();
 				System.exit(0);
 			}
 		});

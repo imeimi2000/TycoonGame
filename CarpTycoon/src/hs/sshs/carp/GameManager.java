@@ -41,9 +41,6 @@ public class GameManager {
 				ImageManager.putImage(fn, f);
 			}
 			
-			//ImageManager.findImage("ome");
-			//ImageManager.putImage("omg", new File("omg.png"));
-			
 			GameManager gm = new GameManager("Carp Tycoon", 1080, 720, 60);
 			while (true) {
 				gm.update();
