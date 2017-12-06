@@ -9,11 +9,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class GameScreen extends Frame implements MouseListener {
 	private MouseInfo mouseInfo;
 	private Point screenSize;
-	private ArrayList<GameObject> obj;
+	private Set<GameObject> obj;
 	private static Frame mainFrame;
 	
 	GameScreen(String title, int width, int height) {
@@ -22,7 +24,7 @@ public class GameScreen extends Frame implements MouseListener {
 		screenSize = new Point(width, height);
 		this.setSize(width, height);
 		this.setVisible(true);
-		obj = new ArrayList<GameObject>();
+		obj = new TreeSet<GameObject>();
 		mainFrame = this;
 		this.addMouseListener(this);
 		this.addWindowListener(new WindowAdapter() {
@@ -48,12 +50,17 @@ public class GameScreen extends Frame implements MouseListener {
 		obj.clear();
 	}
 	
+	public void setDepth(GameObject g, int d) {
+		obj.remove(g);
+		g.setDepth(d);
+		obj.add(g);
+	}
+	
 	@Override
 	public void paint(Graphics g) {
 		Image img = createImage(screenSize.getX(), screenSize.getY());
 		Graphics buf = img.getGraphics();
 		
-		Collections.sort(obj);
 		for (GameObject i : obj) i.draw(buf);
 		g.drawImage(img, 0, 0, this);
 		mouseInfo.init();

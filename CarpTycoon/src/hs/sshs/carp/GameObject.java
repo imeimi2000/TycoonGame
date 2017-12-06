@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 public abstract class GameObject implements Comparable<GameObject> {
 	protected Point location;
-	private long index;
+	private final long index;
 	private int depth;
 	private static long objCount = 0;
 	
