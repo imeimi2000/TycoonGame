@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 class ImageNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1875353198585267759L;
@@ -28,7 +29,8 @@ public abstract class ImageManager {
 		return ret;
 	}
 	public static void putImage(String name, String fn) throws IOException {
-		img.put(name, ImageIO.read(new File(fn)));
+		img.put(name, new ImageIcon(fn).getImage());
+		System.out.println("Read File \"" + fn + "\", " + name);
 	}
 	public static void putImage(String name, File f) throws IOException {
 		img.put(name, ImageIO.read(f));
@@ -37,6 +39,7 @@ public abstract class ImageManager {
 		for (File f : path.listFiles()) {
 			String fn = f.getName();
 			putImage(fn.substring(0, fn.length() - 4), f);
+			//putImage(fn.substring(0, fn.length() - 4), f.getAbsolutePath());
 		}
 	}
 }
