@@ -2,8 +2,7 @@ package hs.sshs.carp;
 
 import java.awt.Graphics;
 
-public class Carp extends GameObject {
-	public static final Point size = new Point(200, 106);
+public class Carp extends ClickAble {
 	private static final double completeTime = 5.0;
 	private static final double burnTime = 10.0;
 	
@@ -17,18 +16,19 @@ public class Carp extends GameObject {
 		carpCompleteTime = (int)(GameManager.getManager().getFrameRate() * completeTime);
 		carpBurnTime = (int)(GameManager.getManager().getFrameRate() * burnTime);
 		type = -1;
+		size = GameManager.carpSize;
 	}
 	
 	public void setType(int t) {
 		type = t;
 		if (type == -1) return;
 		
-		startTime = GameManager.currentTime();
+		startTime = GameManager.currentFrame();
 	}
 	
 	public int getType() {
 		if (type == -1) return -1;
-		long t = GameManager.currentTime() - startTime;
+		long t = GameManager.currentFrame() - startTime;
 		if (t < carpCompleteTime) return -2;
 		if (t < carpBurnTime) return type;
 		return -3;
@@ -41,7 +41,7 @@ public class Carp extends GameObject {
 		if (type == -1) return;
 		
 		String fn;
-		long t = GameManager.currentTime() - startTime;
+		long t = GameManager.currentFrame() - startTime;
 		if (t < carpCompleteTime) fn = GameManager.typeImage[type];
 		else if (t < carpBurnTime) fn = "carp";
 		else fn = "burned_carp";

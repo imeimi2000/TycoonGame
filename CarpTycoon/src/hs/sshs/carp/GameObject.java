@@ -23,7 +23,6 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	public Point getLocation() { return location; }
 	public abstract void draw(Graphics g);
-	public abstract boolean contains(Point p);
 	
 	@Override
 	public int compareTo(GameObject g) {

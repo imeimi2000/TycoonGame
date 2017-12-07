@@ -24,9 +24,4 @@ public class CarpGuest extends GameObject {
 		g.drawString(GameManager.metarialName[type], location.getX() + textPosition.getX()
 				, location.getY() + textPosition.getY());
 	}
-	
-	@Override
-	public boolean contains(Point p) {
-		return false;
-	}
 }

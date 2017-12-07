@@ -8,9 +8,23 @@ import java.util.Random;
 public class GameManager {
 	public static final String[] metarialName = { "Å©¸²", "ÆÏ" };
 	public static final String[] typeImage = { "cream", "red_bean" };
+	
+	public static final Point carpSize = new Point(200, 107);
+	public static final Point bagSize = new Point(78, 146);
+	
+	private static final Point castPosition = new Point(400, 399);
+	private static final Point selectorPosition = new Point(400, 100);
+	private static final int bagY = 250;
+	private static final Point guestPosition = new Point(100, 500);
+	
+	private static final int successScore = 10;
+	private static final int wastePenalty = -1;
+	private static final int guestReturnPenalty = -3;
+	
 	private static final int materialCount = 2;
 	private static final int maxGuestCount = 3;
 	private static final int carpCastCount = 9;
+	
 	private static final double newGuestTime = 2.5;
 	
 	private static GameManager mainManager;
@@ -49,15 +63,16 @@ public class GameManager {
 		selectedMaterial = -1;
 		rnd = new Random(System.currentTimeMillis());
 		for (int i = 0; i < cast.length; ++i) {
-			cast[i] = new Carp(400 + 200 * (i / 3), 720 - (107 * (i % 3 + 1)));
-			scr.addObject(cast[i], 1);
+			cast[i] = new Carp(castPosition.getX() + carpSize.getX() * (i / 3)
+					, castPosition.getY() + carpSize.getY() * (i % 3));
+			scr.addObject(cast[i], 0);
 		}
 		for (int i = 0; i < materialCount; ++i) {
-			int x = 400 + i * 200;
-			matSel[i] = new MaterialSelector(400 + i * 200, 100, i);
+			matSel[i] = new MaterialSelector(selectorPosition.getX() + carpSize.getX() * i
+					, selectorPosition.getY(), i);
 			scr.addObject(matSel[i], 0);
 			
-			bags[i] = new CarpBag(x, 250);
+			bags[i] = new CarpBag(selectorPosition.getX() + carpSize.getX() * i, bagY);
 			scr.addObject(bags[i], 0);
 		}
 		score = 0;
@@ -74,17 +89,17 @@ public class GameManager {
 		
 		if (frameCount % (int)(frameRate * newGuestTime) == 0) {
 			if (guest.size() < maxGuestCount) {
-				CarpGuest newGuest = new CarpGuest(100, 0, rnd.nextInt(materialCount));
+				CarpGuest newGuest = new CarpGuest(guestPosition.getX(), 0, rnd.nextInt(materialCount));
 				guest.add(newGuest);
 				scr.addObject(newGuest, 0);
 			}
 			else {
-				score -= 3;
+				score += guestReturnPenalty;
 			}
 		}
 		
 		for (int i = 0; i < guest.size(); ++i) {
-			guest.get(i).setY(700 - 200 * (i + 1));
+			guest.get(i).setY(guestPosition.getY() - 200 * i);
 		}
 		
 		MouseInfo minfo = scr.getMouseInfo();
@@ -105,8 +120,9 @@ public class GameManager {
 						scr.removeObject(guest.get(0));
 						guest.remove(0);
 						bags[i].subCount();
-						score += 10;
+						score += successScore;
 					}
+					break;
 				}
 			}
 			
@@ -115,11 +131,11 @@ public class GameManager {
 					switch (cast[i].getType()) {
 					case -3:
 						cast[i].setType(-1);
-						score--;
+						score += wastePenalty;
 						break;
 					case -2:
 						cast[i].setType(-1);
-						score--;
+						score += wastePenalty;
 						break;
 					case -1:
 						if (selectedMaterial != -1) {
@@ -139,7 +155,7 @@ public class GameManager {
 		if (selectedMaterial != -1)
 			matSel[selectedMaterial].select();
 		scoreLabel.setText("Score : " + score);
-		timeLabel.setText(String.format("Elapsed Time : %.1fs", (updateTime - startTime) / 1000.0));
+		timeLabel.setText(String.format("Time : %.1fs", (updateTime - startTime) / 1000.0));
 		
 		scr.repaint();
 		frameCount++;

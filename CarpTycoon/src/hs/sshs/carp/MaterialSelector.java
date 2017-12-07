@@ -2,15 +2,14 @@ package hs.sshs.carp;
 
 import java.awt.Graphics;
 
-public class MaterialSelector extends GameObject {
-	private static final Point size = new Point(200, 106);
-	
+public class MaterialSelector extends ClickAble {
 	private final int type;
 	private boolean selected;
 	
 	MaterialSelector(int x, int y, int t) {
 		super(x, y);
 		type = t;
+		size = GameManager.carpSize;
 	}
 	
 	public void select() {
@@ -25,13 +24,4 @@ public class MaterialSelector extends GameObject {
 			selected = false;
 		}
 	}
-
-	@Override
-	public boolean contains(Point p) {
-		return location.getX() <= p.getX()
-				&& p.getX() < location.getX() + size.getX()
-				&& location.getY() <= p.getY()
-				&& p.getY() < location.getY() + size.getY();
-	}
-
 }

@@ -23,9 +23,4 @@ public class TextLabel extends GameObject {
 	public void draw(Graphics g) {
 		g.drawString(text, location.getX(), location.getY());
 	}
-	
-	@Override
-	public boolean contains(Point p) {
-		return false;
-	}
 }

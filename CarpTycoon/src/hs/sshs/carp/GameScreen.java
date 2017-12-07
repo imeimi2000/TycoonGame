@@ -93,7 +93,7 @@ public class GameScreen extends Frame implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent event) {
-		System.out.println("Mouse Clicked (" + event.getX() +  "," + event.getY() + ")");
+		System.err.println("Mouse Clicked (" + event.getX() +  "," + event.getY() + ")");
 		mouseInfo.clickLocation(event.getX(), event.getY());
 	}
 }
