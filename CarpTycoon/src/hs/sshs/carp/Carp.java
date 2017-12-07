@@ -6,7 +6,6 @@ public class Carp extends GameObject {
 	public static final Point size = new Point(200, 106);
 	private static final long completeTime = 5000;
 	private static final long burnTime = 10000;
-	private static final String[] typeImage = { "cream", "red_bean" };
 	
 	private long startTime;
 	private int type;
@@ -39,7 +38,7 @@ public class Carp extends GameObject {
 		
 		String fn;
 		long t = GameManager.currentTime() - startTime;
-		if (t < completeTime) fn = typeImage[type];
+		if (t < completeTime) fn = GameManager.typeImage[type];
 		else if (t < burnTime) fn = "carp";
 		else fn = "burned_carp";
 		g.drawImage(ImageManager.findImage(fn), location.getX(), location.getY()
