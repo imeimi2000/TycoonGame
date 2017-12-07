@@ -13,7 +13,8 @@ public class MainClass {
 			}
 		}
 		catch (Exception e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
+			System.err.println("Exception Throwed, Exit Program");
 		}
 	}
 }

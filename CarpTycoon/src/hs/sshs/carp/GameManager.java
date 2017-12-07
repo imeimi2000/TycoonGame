@@ -1,11 +1,15 @@
 package hs.sshs.carp;
 
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameManager {
 	public static final String[] metarialName = { "Å©¸²", "ÆÏ" };
 	public static final String[] typeImage = { "cream", "red_bean" };
+	private static final int materialCount = 2;
+	private static final int maxGuestCount = 3;
 	
 	private static GameManager mainManager;
 	private static long updateTime;
@@ -16,21 +20,26 @@ public class GameManager {
 	private long frameCount;
 	private ArrayList<CarpGuest> guest;
 	private Carp[] cast = new Carp[9];
-	private MaterialSelector[] matSel = new MaterialSelector[2];
+	private MaterialSelector[] matSel = new MaterialSelector[materialCount];
+	private CarpBag[] bags = new CarpBag[materialCount];
 	private int selectedMaterial;
 	private Random rnd;
-	
-	private final int metarialCount = 2;
-	private final int maxGuestCount = 3;
+	private TextLabel scoreLabel;
+	private int score;
 	
 	public static long currentTime() {
 		return updateTime;
 	}
 	
-	public GameManager(String title, int width, int height, int frameRate) {
+	public static long currentFrame() {
+		return mainManager.frameCount;
+	}
+	
+	public GameManager(String title, int width, int height, int frameRate) throws IOException, FontFormatException {
 		scr = new GameScreen(title, width, height);
 		this.frameRate = frameRate;
 		frameCount = 0;
+		score = 0;
 		startTime = System.currentTimeMillis();
 		mainManager = this;
 		guest = new ArrayList<CarpGuest>();
@@ -40,10 +49,17 @@ public class GameManager {
 			cast[i] = new Carp(400 + 200 * (i / 3), 720 - (107 * (i % 3 + 1)));
 			scr.addObject(cast[i], 1);
 		}
-		for (int i = 0; i < matSel.length; ++i) {
+		for (int i = 0; i < materialCount; ++i) {
+			int x = 400 + i * 200;
 			matSel[i] = new MaterialSelector(400 + i * 200, 100, i);
 			scr.addObject(matSel[i], 0);
+			
+			bags[i] = new CarpBag(x, 250);
+			scr.addObject(bags[i], 0);
 		}
+		score = 0;
+		scoreLabel = new TextLabel(10, 70);
+		scr.addObject(scoreLabel);
 	}
 	
 	public int getFrameRate() { return frameRate; }
@@ -52,7 +68,7 @@ public class GameManager {
 		updateTime = System.currentTimeMillis();
 		
 		if (guest.size() < maxGuestCount && frameCount % (frameRate * 3) == 0) {
-			CarpGuest newGuest = new CarpGuest(100, 0, rnd.nextInt(metarialCount));
+			CarpGuest newGuest = new CarpGuest(100, 0, rnd.nextInt(materialCount));
 			guest.add(newGuest);
 			scr.addObject(newGuest, 0);
 		}
@@ -71,14 +87,29 @@ public class GameManager {
 				}
 			}
 			
+			for (int i = 0; i < bags.length; ++i) {
+				if (bags[i].contains(clickPoint)) {
+					if (bags[i].getCount() > 0
+							&& guest.size() > 0
+							&& guest.get(0).getType() == i) {
+						scr.removeObject(guest.get(0));
+						guest.remove(0);
+						bags[i].subCount();
+						score += 10;
+					}
+				}
+			}
+			
 			for (int i = 0; i < cast.length; ++i) {
 				if (cast[i].contains(clickPoint)) {
 					switch (cast[i].getType()) {
 					case -3:
 						cast[i].setType(-1);
+						score--;
 						break;
 					case -2:
 						cast[i].setType(-1);
+						score--;
 						break;
 					case -1:
 						if (selectedMaterial != -1) {
@@ -87,10 +118,7 @@ public class GameManager {
 						}
 						break;
 					default:
-						if (guest.size() > 0
-						 && guest.get(0).getType() == cast[i].getType()) {
-							guest.remove(0);
-						}
+						bags[cast[i].getType()].addCount();
 						cast[i].setType(-1);
 						break;
 					}
@@ -100,6 +128,7 @@ public class GameManager {
 		}
 		if (selectedMaterial != -1)
 			matSel[selectedMaterial].select();
+		scoreLabel.setText("Score : " + score);
 		scr.repaint();
 		frameCount++;
 	}

@@ -1,5 +1,7 @@
 package hs.sshs.carp;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -7,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,13 +20,15 @@ public class GameScreen extends Frame implements MouseListener {
 	private Point screenSize;
 	private Set<GameObject> obj;
 	
-	GameScreen(String title, int width, int height) {
+	GameScreen(String title, int width, int height) throws IOException, FontFormatException {
 		super(title);
 		mouseInfo = new MouseInfo();
 		screenSize = new Point(width, height);
 		this.setSize(width, height);
 		this.setUndecorated(false);
 		this.setVisible(true);
+		Font ft = Font.createFont(Font.TRUETYPE_FONT, new File("res/NANUMBARUNGOTHICBOLD.TTF"));
+		this.setFont(ft.deriveFont(Font.BOLD, 32));
 		obj = new TreeSet<GameObject>();
 		this.addMouseListener(this);
 		this.addWindowListener(new WindowAdapter() {

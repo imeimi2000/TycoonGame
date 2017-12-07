@@ -20,8 +20,8 @@ public class CarpGuest extends GameObject {
 	public void draw(Graphics g) {
 		g.drawImage(ImageManager.findImage("guest_1"), location.getX(), location.getY()
 				, size.getX(), size.getY(), GameManager.getScreen());
-		g.drawString(GameManager.metarialName[type], location.getX() + size.getX() * 3 / 4
-				, location.getY() + size.getY() / 4);
+		g.drawString(GameManager.metarialName[type], location.getX() + size.getX() * 2 / 3
+				, location.getY() + size.getY() * 7 / 24);
 	}
 	
 	@Override
