@@ -22,6 +22,14 @@ public class Carp extends GameObject {
 		
 		startTime = GameManager.currentTime();
 	}
+	
+	public int getType() {
+		if (type == -1) return -1;
+		long t = GameManager.currentTime() - startTime;
+		if (t < completeTime) return -2;
+		if (t < burnTime) return type;
+		return -3;
+	}
 
 	@Override
 	public void draw(Graphics g) {
