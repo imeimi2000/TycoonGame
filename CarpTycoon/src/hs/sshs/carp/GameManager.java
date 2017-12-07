@@ -10,6 +10,8 @@ public class GameManager {
 	public static final String[] typeImage = { "cream", "red_bean" };
 	private static final int materialCount = 2;
 	private static final int maxGuestCount = 3;
+	private static final int carpCastCount = 9;
+	private static final double newGuestTime = 2.5;
 	
 	private static GameManager mainManager;
 	private static long updateTime;
@@ -19,12 +21,13 @@ public class GameManager {
 	private long startTime;
 	private long frameCount;
 	private ArrayList<CarpGuest> guest;
-	private Carp[] cast = new Carp[9];
+	private Carp[] cast = new Carp[carpCastCount];
 	private MaterialSelector[] matSel = new MaterialSelector[materialCount];
 	private CarpBag[] bags = new CarpBag[materialCount];
 	private int selectedMaterial;
 	private Random rnd;
 	private TextLabel scoreLabel;
+	private TextLabel timeLabel;
 	private int score;
 	
 	public static long currentTime() {
@@ -59,7 +62,9 @@ public class GameManager {
 		}
 		score = 0;
 		scoreLabel = new TextLabel(10, 70);
-		scr.addObject(scoreLabel);
+		scr.addObject(scoreLabel, 1);
+		timeLabel = new TextLabel(10, 110);
+		scr.addObject(timeLabel, 1);
 	}
 	
 	public int getFrameRate() { return frameRate; }
@@ -67,10 +72,15 @@ public class GameManager {
 	public void update() {
 		updateTime = System.currentTimeMillis();
 		
-		if (guest.size() < maxGuestCount && frameCount % (frameRate * 3) == 0) {
-			CarpGuest newGuest = new CarpGuest(100, 0, rnd.nextInt(materialCount));
-			guest.add(newGuest);
-			scr.addObject(newGuest, 0);
+		if (frameCount % (int)(frameRate * newGuestTime) == 0) {
+			if (guest.size() < maxGuestCount) {
+				CarpGuest newGuest = new CarpGuest(100, 0, rnd.nextInt(materialCount));
+				guest.add(newGuest);
+				scr.addObject(newGuest, 0);
+			}
+			else {
+				score -= 3;
+			}
 		}
 		
 		for (int i = 0; i < guest.size(); ++i) {
@@ -129,6 +139,8 @@ public class GameManager {
 		if (selectedMaterial != -1)
 			matSel[selectedMaterial].select();
 		scoreLabel.setText("Score : " + score);
+		timeLabel.setText(String.format("Elapsed Time : %.1fs", (updateTime - startTime) / 1000.0));
+		
 		scr.repaint();
 		frameCount++;
 	}

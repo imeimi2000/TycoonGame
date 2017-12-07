@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 public class CarpBag extends GameObject {
 	private static final Point size = new Point(78, 146);
+	private static final Point textPosition = new Point(39, 73);
 	private int count;
 	
 	public CarpBag(int x, int y) {
@@ -19,8 +20,8 @@ public class CarpBag extends GameObject {
 	public void draw(Graphics g) {
 		g.drawImage(ImageManager.findImage("paper_bag"), location.getX(), location.getY()
 				, size.getX(), size.getY(), GameManager.getScreen());
-		g.drawString(count + "°³", location.getX() + size.getX() / 2
-				, location.getY() + size.getY() / 2);
+		g.drawString(count + "°³", location.getX() + textPosition.getX()
+				, location.getY() + textPosition.getY());
 	}
 
 	@Override

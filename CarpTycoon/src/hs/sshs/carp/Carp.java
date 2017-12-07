@@ -4,14 +4,18 @@ import java.awt.Graphics;
 
 public class Carp extends GameObject {
 	public static final Point size = new Point(200, 106);
-	private static final long completeTime = 5000;
-	private static final long burnTime = 10000;
+	private static final double completeTime = 5.0;
+	private static final double burnTime = 10.0;
 	
+	private final long carpCompleteTime;
+	private final long carpBurnTime;
 	private long startTime;
 	private int type;
 	
 	public Carp(int x, int y) {
 		super(x, y);
+		carpCompleteTime = (int)(GameManager.getManager().getFrameRate() * completeTime);
+		carpBurnTime = (int)(GameManager.getManager().getFrameRate() * burnTime);
 		type = -1;
 	}
 	
@@ -25,8 +29,8 @@ public class Carp extends GameObject {
 	public int getType() {
 		if (type == -1) return -1;
 		long t = GameManager.currentTime() - startTime;
-		if (t < completeTime) return -2;
-		if (t < burnTime) return type;
+		if (t < carpCompleteTime) return -2;
+		if (t < carpBurnTime) return type;
 		return -3;
 	}
 
@@ -38,8 +42,8 @@ public class Carp extends GameObject {
 		
 		String fn;
 		long t = GameManager.currentTime() - startTime;
-		if (t < completeTime) fn = GameManager.typeImage[type];
-		else if (t < burnTime) fn = "carp";
+		if (t < carpCompleteTime) fn = GameManager.typeImage[type];
+		else if (t < carpBurnTime) fn = "carp";
 		else fn = "burned_carp";
 		g.drawImage(ImageManager.findImage(fn), location.getX(), location.getY()
 				, size.getX(), size.getY(), GameManager.getScreen());
