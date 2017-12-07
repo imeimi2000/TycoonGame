@@ -8,7 +8,6 @@ public class TextLabel extends GameObject {
 	TextLabel(int x, int y) {
 		super(x, y);
 		text = "";
-		// TODO Auto-generated constructor stub
 	}
 	
 	TextLabel(int x, int y, String str) {

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 class ImageNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = 1875353198585267759L;
 	String fileName;
 	ImageNotFoundException(String fname) {
 		fileName = fname;

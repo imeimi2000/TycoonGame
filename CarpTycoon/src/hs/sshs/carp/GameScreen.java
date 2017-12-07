@@ -7,11 +7,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
+@SuppressWarnings("serial")
 public class GameScreen extends Frame implements MouseListener {
 	private MouseInfo mouseInfo;
 	private Point screenSize;
@@ -22,6 +21,7 @@ public class GameScreen extends Frame implements MouseListener {
 		mouseInfo = new MouseInfo();
 		screenSize = new Point(width, height);
 		this.setSize(width, height);
+		this.setUndecorated(false);
 		this.setVisible(true);
 		obj = new TreeSet<GameObject>();
 		this.addMouseListener(this);
@@ -36,6 +36,11 @@ public class GameScreen extends Frame implements MouseListener {
 	public int getHeight() { return screenSize.getY(); }
 	public MouseInfo getMouseInfo() { return mouseInfo; }
 	public void addObject(GameObject g) {
+		obj.add(g);
+	}
+	
+	public void addObject(GameObject g, int d) {
+		g.setDepth(d);
 		obj.add(g);
 	}
 	
@@ -60,12 +65,12 @@ public class GameScreen extends Frame implements MouseListener {
 		
 		for (GameObject i : obj) i.draw(buf);
 		g.drawImage(img, 0, 0, this);
-		mouseInfo.init();
 	}
 	
 	@Override
 	public void update(Graphics g) {
 		paint(g);
+		mouseInfo.init();
 	}
 	
 	@Override
