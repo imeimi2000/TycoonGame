@@ -16,7 +16,6 @@ public class GameScreen extends Frame implements MouseListener {
 	private MouseInfo mouseInfo;
 	private Point screenSize;
 	private Set<GameObject> obj;
-	private static Frame mainFrame;
 	
 	GameScreen(String title, int width, int height) {
 		super(title);
@@ -25,7 +24,6 @@ public class GameScreen extends Frame implements MouseListener {
 		this.setSize(width, height);
 		this.setVisible(true);
 		obj = new TreeSet<GameObject>();
-		mainFrame = this;
 		this.addMouseListener(this);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -34,7 +32,6 @@ public class GameScreen extends Frame implements MouseListener {
 		});
 	}
 	
-	public static Frame getScreen() { return mainFrame; }
 	public int getWidth() { return screenSize.getX(); }
 	public int getHeight() { return screenSize.getY(); }
 	public MouseInfo getMouseInfo() { return mouseInfo; }

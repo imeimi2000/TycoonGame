@@ -32,4 +32,10 @@ public abstract class ImageManager {
 	public static void putImage(String name, File f) throws IOException {
 		img.put(name, ImageIO.read(f));
 	}
+	public static void init(File path) throws IOException {
+		for (File f : path.listFiles()) {
+			String fn = f.getName();
+			putImage(fn.substring(0, fn.length() - 4), f);
+		}
+	}
 }

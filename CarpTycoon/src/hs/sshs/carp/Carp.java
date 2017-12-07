@@ -10,9 +10,10 @@ public class Carp extends GameObject {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(ImageManager.findImage("carp"), location.getX(), location.getY(), GameScreen.getScreen());
+		g.drawImage(ImageManager.findImage("carp"), location.getX(), location.getY(), GameManager.getScreen());
 	}
 	
+	@Override
 	public boolean contains(Point p) {
 		return location.getX() <= p.getX()
 				&& p.getX() < location.getX() + size.getX()
