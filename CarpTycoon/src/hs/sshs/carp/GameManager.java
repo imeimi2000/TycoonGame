@@ -22,7 +22,7 @@ public class GameManager {
 		startTime = System.currentTimeMillis();
 		mainManager = this;
 		for (int i = 0; i < cast.length; ++i) {
-			cast[i] = new Carp(200 + 200 * (i / 3), 720 - (107 * (i % 3 + 1)));
+			cast[i] = new Carp(250 + 200 * (i / 3), 720 - (107 * (i % 3 + 1)));
 			scr.addObject(cast[i], 1);
 		}
 	}
