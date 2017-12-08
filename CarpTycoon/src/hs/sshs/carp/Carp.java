@@ -3,6 +3,8 @@ package hs.sshs.carp;
 import java.awt.Graphics;
 
 public class Carp extends ClickAble {
+	public static final int EMPTY = -1, INCOMPLETE = -2, BURNED = -3;
+	
 	private static final double completeTime = 5.0;
 	private static final double burnTime = 10.0;
 	
@@ -21,24 +23,24 @@ public class Carp extends ClickAble {
 	
 	public void setType(int t) {
 		type = t;
-		if (type == -1) return;
+		if (type == EMPTY) return;
 		
 		startTime = GameManager.currentFrame();
 	}
 	
 	public int getType() {
-		if (type == -1) return -1;
+		if (type == EMPTY) return EMPTY;
 		long t = GameManager.currentFrame() - startTime;
-		if (t < carpCompleteTime) return -2;
+		if (t < carpCompleteTime) return INCOMPLETE;
 		if (t < carpBurnTime) return type;
-		return -3;
+		return BURNED;
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(ImageManager.findImage("cast"), location.getX(), location.getY()
 				, size.getX(), size.getY(), GameManager.getScreen());
-		if (type == -1) return;
+		if (type == EMPTY) return;
 		
 		String fn;
 		long t = GameManager.currentFrame() - startTime;
@@ -47,13 +49,5 @@ public class Carp extends ClickAble {
 		else fn = "burned_carp";
 		g.drawImage(ImageManager.findImage(fn), location.getX(), location.getY()
 				, size.getX(), size.getY(), GameManager.getScreen());
-	}
-	
-	@Override
-	public boolean contains(Point p) {
-		return location.getX() <= p.getX()
-				&& p.getX() < location.getX() + size.getX()
-				&& location.getY() <= p.getY()
-				&& p.getY() < location.getY() + size.getY();
 	}
 }

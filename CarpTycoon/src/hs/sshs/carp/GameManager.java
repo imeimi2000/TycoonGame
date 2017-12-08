@@ -129,15 +129,15 @@ public class GameManager {
 			for (int i = 0; i < cast.length; ++i) {
 				if (cast[i].contains(clickPoint)) {
 					switch (cast[i].getType()) {
-					case -3:
+					case Carp.BURNED:
 						cast[i].setType(-1);
 						score += wastePenalty;
 						break;
-					case -2:
+					case Carp.INCOMPLETE:
 						cast[i].setType(-1);
 						score += wastePenalty;
 						break;
-					case -1:
+					case Carp.EMPTY:
 						if (selectedMaterial != -1) {
 							cast[i].setType(selectedMaterial);
 							selectedMaterial = -1;
