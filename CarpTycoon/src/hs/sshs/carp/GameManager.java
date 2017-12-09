@@ -6,22 +6,26 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameManager {
-	public static final String[] metarialName = { "Å©¸²", "ÆÏ" };
-	public static final String[] typeImage = { "cream", "red_bean" };
+	public static final String[] metarialName = { "Å©¸²", "ÆÏ","³ìÂ÷", "±èÄ¡" };
+	public static final String[] typeImage = { "cream", "red_bean", "green_cream", "kimchi" };
+	public static final String[] carpImage = { "cream_carp", "red_carp", "green_carp","kimchi_carp"};
 	
 	public static final Point carpSize = new Point(200, 107);
 	public static final Point bagSize = new Point(78, 146);
+	public static final Point sauceSize = new Point(150, 107);
+	public static final Point pasteSize = new Point(150,200);
 	
 	private static final Point castPosition = new Point(400, 399);
-	private static final Point selectorPosition = new Point(400, 100);
-	private static final int bagY = 250;
+	private static final Point selectorPosition = new Point(350, 100);
+	private static final Point bagPosition = new Point(400,250);
 	private static final Point guestPosition = new Point(100, 500);
-	
+	private static final Point pastePosition = new Point(950,300);
+
 	private static final int successScore = 10;
 	private static final int wastePenalty = -1;
 	private static final int guestReturnPenalty = -3;
 	
-	private static final int materialCount = 2;
+	private static final int materialCount = 4;
 	private static final int maxGuestCount = 3;
 	private static final int carpCastCount = 9;
 	
@@ -38,7 +42,9 @@ public class GameManager {
 	private Carp[] cast = new Carp[carpCastCount];
 	private MaterialSelector[] matSel = new MaterialSelector[materialCount];
 	private CarpBag[] bags = new CarpBag[materialCount];
+	private Paste paste= new Paste(pastePosition.getX(),pastePosition.getY());
 	private int selectedMaterial;
+	private boolean selectedPaste;
 	private Random rnd;
 	private TextLabel scoreLabel;
 	private TextLabel timeLabel;
@@ -61,6 +67,7 @@ public class GameManager {
 		mainManager = this;
 		guest = new ArrayList<CarpGuest>();
 		selectedMaterial = -1;
+		selectedPaste=false;
 		rnd = new Random(System.currentTimeMillis());
 		for (int i = 0; i < cast.length; ++i) {
 			cast[i] = new Carp(castPosition.getX() + carpSize.getX() * (i / 3)
@@ -68,11 +75,11 @@ public class GameManager {
 			scr.addObject(cast[i], 0);
 		}
 		for (int i = 0; i < materialCount; ++i) {
-			matSel[i] = new MaterialSelector(selectorPosition.getX() + carpSize.getX() * i
+			matSel[i] = new MaterialSelector(selectorPosition.getX() + sauceSize.getX() * i
 					, selectorPosition.getY(), i);
 			scr.addObject(matSel[i], 0);
 			
-			bags[i] = new CarpBag(selectorPosition.getX() + carpSize.getX() * i, bagY);
+			bags[i] = new CarpBag(bagPosition.getX() + sauceSize.getX() * i, bagPosition.getY());
 			scr.addObject(bags[i], 0);
 		}
 		score = 0;
@@ -80,6 +87,7 @@ public class GameManager {
 		scr.addObject(scoreLabel, 1);
 		timeLabel = new TextLabel(10, 110);
 		scr.addObject(timeLabel, 1);
+		scr.addObject(paste, 0);
 	}
 	
 	public int getFrameRate() { return frameRate; }
@@ -125,7 +133,10 @@ public class GameManager {
 					break;
 				}
 			}
-			
+			if(paste.contains(clickPoint)) {
+				selectedPaste=true;
+				System.out.println("yay");
+			}
 			for (int i = 0; i < cast.length; ++i) {
 				if (cast[i].contains(clickPoint)) {
 					switch (cast[i].getType()) {
@@ -138,6 +149,13 @@ public class GameManager {
 						score += wastePenalty;
 						break;
 					case Carp.EMPTY:
+						if (selectedPaste) {
+							cast[i].setType(-4);
+							selectedPaste = false;
+							System.out.println("yaay");
+						}
+						break;
+					case Carp.PASTE:
 						if (selectedMaterial != -1) {
 							cast[i].setType(selectedMaterial);
 							selectedMaterial = -1;

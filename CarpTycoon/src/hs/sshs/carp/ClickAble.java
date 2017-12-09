@@ -6,7 +6,6 @@ public abstract class ClickAble extends GameObject {
 	ClickAble(int x, int y) {
 		super(x, y);
 	}
-	
 	public boolean contains(Point p) {
 		return location.getX() <= p.getX()
 				&& p.getX() < location.getX() + size.getX()
