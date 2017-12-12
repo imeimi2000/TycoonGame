@@ -1,6 +1,7 @@
 package hs.sshs.carp;
 
 import java.awt.FontFormatException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,6 +60,7 @@ public class GameManager {
 	}
 	
 	public GameManager(String title, int width, int height, int frameRate) throws IOException, FontFormatException {
+		ImageManager.init();
 		scr = new GameScreen(title, width, height);
 		this.frameRate = frameRate;
 		frameCount = 0;

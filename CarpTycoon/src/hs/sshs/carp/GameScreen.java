@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,7 +26,7 @@ public class GameScreen extends Frame implements MouseListener {
 		this.setSize(width, height);
 		this.setUndecorated(false);
 		this.setVisible(true);
-		Font ft = Font.createFont(Font.TRUETYPE_FONT, new File("res/nanumgothic.ttf"));
+		Font ft = Font.createFont(Font.TRUETYPE_FONT, MainClass.class.getResourceAsStream("/nanumgothic.ttf"));
 		this.setFont(ft.deriveFont(Font.BOLD, 32));
 		obj = new TreeSet<GameObject>();
 		this.addMouseListener(this);
@@ -46,6 +45,7 @@ public class GameScreen extends Frame implements MouseListener {
 	}
 	
 	public void addObject(GameObject g, int d) {
+		System.err.println("Add Object : " + g.getClass());
 		g.setDepth(d);
 		obj.add(g);
 	}
@@ -68,8 +68,12 @@ public class GameScreen extends Frame implements MouseListener {
 	public void paint(Graphics g) {
 		Image img = createImage(screenSize.getX(), screenSize.getY());
 		Graphics buf = img.getGraphics();
-		
-		for (GameObject i : obj) i.draw(buf);
+
+		if (obj != null) {
+			for (GameObject i : obj) {
+				i.draw(buf);
+			}
+		}
 		g.drawImage(img, 0, 0, this);
 	}
 	
