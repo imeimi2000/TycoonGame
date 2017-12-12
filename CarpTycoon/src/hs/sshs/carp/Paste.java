@@ -6,9 +6,8 @@ public class Paste extends ClickAble {
 	private boolean selected;
 	public Paste(int x, int y){
 		super(x, y);
-		size=GameManager.pasteSize;
+		size = GameManager.pasteSize;
 	}
-
 
 	public void select() {
 		selected = true;

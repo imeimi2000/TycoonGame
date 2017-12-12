@@ -154,7 +154,7 @@ public class GameManager {
 						if (selectedPaste) {
 							cast[i].setType(-4);
 							selectedPaste = false;
-							System.out.println("yaay");
+							System.err.println("Fill Empty Cast!!!");
 						}
 						break;
 					case Carp.PASTE:
