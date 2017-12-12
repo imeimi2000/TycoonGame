@@ -27,7 +27,7 @@ public class GameScreen extends Frame implements MouseListener {
 		this.setSize(width, height);
 		this.setUndecorated(false);
 		this.setVisible(true);
-		Font ft = Font.createFont(Font.TRUETYPE_FONT, new File("res/NANUMBARUNGOTHICBOLD.TTF"));
+		Font ft = Font.createFont(Font.TRUETYPE_FONT, new File("res/nanumgothic.ttf"));
 		this.setFont(ft.deriveFont(Font.BOLD, 32));
 		obj = new TreeSet<GameObject>();
 		this.addMouseListener(this);

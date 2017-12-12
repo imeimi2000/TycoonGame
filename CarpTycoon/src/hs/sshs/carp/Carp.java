@@ -44,7 +44,7 @@ public class Carp extends ClickAble {
 		if (type == EMPTY) return;
 		g.drawImage(ImageManager.findImage("paste_carp"), location.getX(), location.getY()
 				, size.getX(), size.getY(), GameManager.getScreen());
-		if (type==PASTE) return;
+		if (type == PASTE) return;
 		String fn;
 		long t = GameManager.currentFrame() - startTime;
 		if (t < carpCompleteTime) fn = "paste_carp";

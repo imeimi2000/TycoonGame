@@ -67,7 +67,7 @@ public class GameManager {
 		mainManager = this;
 		guest = new ArrayList<CarpGuest>();
 		selectedMaterial = -1;
-		selectedPaste=false;
+		selectedPaste = false;
 		rnd = new Random(System.currentTimeMillis());
 		for (int i = 0; i < cast.length; ++i) {
 			cast[i] = new Carp(castPosition.getX() + carpSize.getX() * (i / 3)
@@ -133,10 +133,12 @@ public class GameManager {
 					break;
 				}
 			}
-			if(paste.contains(clickPoint)) {
-				selectedPaste=true;
-				System.out.println("yay");
+			
+			if (paste.contains(clickPoint)) {
+				selectedPaste = true;
+				System.err.println("Paste Clicked");
 			}
+			
 			for (int i = 0; i < cast.length; ++i) {
 				if (cast[i].contains(clickPoint)) {
 					switch (cast[i].getType()) {

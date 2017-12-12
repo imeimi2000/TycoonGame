@@ -7,7 +7,7 @@ public class TextLabel extends GameObject {
 	
 	TextLabel(int x, int y) {
 		super(x, y);
-		text = "";
+		text = "Text Label~~";
 	}
 	
 	TextLabel(int x, int y, String str) {
