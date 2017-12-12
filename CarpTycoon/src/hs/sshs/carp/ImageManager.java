@@ -30,16 +30,17 @@ public abstract class ImageManager {
 	}
 	public static void putImage(String name, String fn) throws IOException {
 		img.put(name, new ImageIcon(fn).getImage());
-		System.out.println("Read File \"" + fn + "\", " + name);
+		System.err.println("Read File \"" + fn + "\", " + name);
 	}
 	public static void putImage(String name, File f) throws IOException {
 		img.put(name, ImageIO.read(f));
+		System.err.println("Read File \"" + f.getName() + "\", " + name);
 	}
 	public static void init(File path) throws IOException {
 		for (File f : path.listFiles()) {
 			String fn = f.getName();
-			putImage(fn.substring(0, fn.length() - 4), f);
-			//putImage(fn.substring(0, fn.length() - 4), f.getAbsolutePath());
+			//putImage(fn.substring(0, fn.length() - 4), f);
+			putImage(fn.substring(0, fn.length() - 4), f.getAbsolutePath());
 		}
 	}
 }
