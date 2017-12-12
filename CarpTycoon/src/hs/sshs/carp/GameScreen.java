@@ -70,8 +70,10 @@ public class GameScreen extends Frame implements MouseListener {
 		Graphics buf = img.getGraphics();
 
 		if (obj != null) {
-			for (GameObject i : obj) {
-				i.draw(buf);
+			synchronized (obj) {
+				for (GameObject i : obj) {
+					i.draw(buf);
+				}
 			}
 		}
 		g.drawImage(img, 0, 0, this);

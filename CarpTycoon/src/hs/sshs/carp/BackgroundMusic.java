@@ -1,14 +1,16 @@
 package hs.sshs.carp;
 
 import java.io.File;
+import java.net.URL;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class BackgroundMusic implements Runnable {
-	File soundFile;
+	URL soundFile;
 	
 	private BackgroundMusic(String fn) {
-		soundFile = new File(fn);
+		soundFile = MainClass.class.getResource("/" + fn);
 	}
 	
 	public static void play(String fn) {
