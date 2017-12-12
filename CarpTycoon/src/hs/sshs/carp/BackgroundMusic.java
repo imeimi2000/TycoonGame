@@ -1,6 +1,5 @@
 package hs.sshs.carp;
 
-import java.io.File;
 import java.net.URL;
 
 import javax.sound.sampled.AudioSystem;
