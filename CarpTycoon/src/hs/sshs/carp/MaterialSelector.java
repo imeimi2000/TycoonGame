@@ -9,7 +9,7 @@ public class MaterialSelector extends ClickAble {
 	MaterialSelector(int x, int y, int t) {
 		super(x, y);
 		type = t;
-		size = GameManager.carpSize;
+		size = GameManager.sauceSize;
 	}
 	
 	public void select() {
