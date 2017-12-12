@@ -7,7 +7,7 @@ public class MainClass {
 		try {
 			ImageManager.init(new File("res/"));
 			GameManager gm = new GameManager("Carp Tycoon", 1280, 720, 60);
-			BackgroundMusic.play("res/bgm.wav");
+			//BackgroundMusic.play("res/bgm.wav");
 			
 			while (true) {
 				gm.update();

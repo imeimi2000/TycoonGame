@@ -40,7 +40,7 @@ public abstract class ImageManager {
 		for (File f : path.listFiles()) {
 			String fn = f.getName();
 			//putImage(fn.substring(0, fn.length() - 4), f);
-			if (fn.substring(fn.length() - 4, fn.length()).equals("png"))
+			if (fn.substring(fn.length() - 3, fn.length()).equals("png"))
 				putImage(fn.substring(0, fn.length() - 4), f.getAbsolutePath());
 		}
 	}
